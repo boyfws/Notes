@@ -1,0 +1,146 @@
+\documentclass{article}
+\usepackage{amsmath} % Для математических формул
+\usepackage{enumitem} % Для настройки списков
+\usepackage{tikz} % Для диаграмм Эйлера
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel} % Для поддержки русского языка
+
+\title{Макроэкономика 1}
+\author{Минкин Даниэль}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents % Оглавление
+
+
+\section{Введение}
+
+\subsection{Формула оценки}
+
+\begin{equation}
+    0.2 \cdot \text{Ср1т} + 0.2 \cdot \text{Ср2т} + 0.25 \cdot \text{Кр1} + 0.35 \cdot \text{Кр2}
+\end{equation}
+где:
+\begin{itemize}
+    \item $\text{Ср1т}$ --- Ср 1 типа (верно-неверно) средняя за 5 работ
+    \item $\text{Ср2т}$ --- Ср 2 типа (ответ на вопрос с пояснением) средняя за 5 работ
+    \item $\text{Кр1}$ --- Контольная работа 1
+    \item $\text{Кр2}$ --- Контольная работа 2
+\end{itemize}
+
+
+\section{Лекция 1}
+
+\subsection{Макроэкономические агенты}
+
+\begin{itemize}
+    \item Домашнее хозяйство
+    \item Фирмы (бизнес)
+    \item Государство
+    \item Иностранный сектор 
+\end{itemize}
+
+\subsection{Формулы}
+
+Домашнее хозяйство тратит располагаемый доход на потребление и сбережение 
+
+\begin{equation}
+    Y_{d} = Y - T
+\end{equation}
+где $Y_{d}$ --- располагаемый доход, $Y$ --- общий доход, а $T$ --- чистые налоги
+
+\quad
+
+\begin{equation}
+    Y_{d} = C + S
+\end{equation}
+где $C$ --- потребление, $S$ --- сбережение
+
+\quad
+
+\begin{equation}
+    T = T_{X} - T_{R}
+\end{equation}
+где $T_{X}$ --- налоги, $T_{R}$ --- трансферты
+
+\quad
+
+\begin{equation}
+    T_{X} = T_{X_{0}} + t * Y
+\end{equation}
+где $t$ --- налоговая ставка 
+
+\quad
+
+Из этого легко вывести следующее:
+
+\quad
+
+\begin{gather*}
+    Y - T = C + S \\
+    \Rightarrow Y - T_{X} + T_{R} = C + S \\
+    \Rightarrow Y - T_{X_{0}} - t * Y + T_{R} = C + S
+\end{gather*}
+
+\subsection{Открытые и закрытые экономики}
+
+Экономики разделяют на открытые и закрытые по принципу наличия иностранного сектора как экономического агента. В случае если он присутствует, выполняется уравнение:
+
+\begin{equation}
+    N_{X} = Ex - Im
+\end{equation}
+где $N_{X}$ --- чистый экспорт, $Ex$ - экспорт, $Im$ - импорт 
+
+\subsection{ВВП и ВНП}
+
+\begin{center}
+    \begin{tikzpicture}
+        \draw[black, thick] (0,0) circle (2cm);
+        \draw[black, thick] (2,0) circle (2cm);
+    
+        % Добавляем метки в непересекающиеся и пересекающиеся области
+        \node at (-1, 0) {1}; % Левая часть первого круга
+        \node at (3, 0) {3};  % Правая часть второго круга
+        \node at (1, 0) {2};  % Пересечение двух кругов
+    
+        % Добавляем подписи к кругам
+        \node[black] at (-1.5, 2.2) {ВВП};
+        \node[black] at (3.5, 2.2) {ВНП};  
+    \end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+    \item 1 --- Производим на нашей территории, не наши факторы.
+    \item 2 --- Наша страна, свои факторы.
+    \item 3 --- Другая страна, наши факторы.
+\end{itemize}
+
+
+\begin{equation}
+    \text{ВВП}_{\text{по расходам}} = C + I + G + N_{X}
+\end{equation}
+где $C$ --- доходы, $I$ --- инвестиции фирм, $G$ --- гос. закупки, $N_{X}$ --- иностранный сектор (чистый экспорт)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
