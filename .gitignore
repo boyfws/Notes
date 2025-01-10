@@ -1,0 +1,23 @@
+# Игнорировать временные файлы LaTeX
+*.aux
+*.log
+*.toc
+*.lof
+*.lot
+*.out
+*.bbl
+*.blg
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+*.fdb_latexmk
+*.fls
+*.xdv
+
+
+# Игнорировать резервные копии редакторов
+*~
+*.backup
+*.bak
+
