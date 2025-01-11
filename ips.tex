@@ -4,6 +4,9 @@
 \usepackage{tikz} % Для диаграмм Эйлера
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel} % Для поддержки русского языка
+\usepackage{array}
+\usepackage{graphicx} % Для вставки фото
+
 
 \title{Конспекты по ИПС}
 \author{Минкин Даниэль}
@@ -171,6 +174,68 @@
             \begin{quote}
                 \textbf{Right-way риск} -- ситуация, при которой $EAD$ и $PD$ коррелируют положительно
             \end{quote}
+    \section{ROC - кривая}
+        \begin{quote}
+            \textbf{ROC} (Receiver Operating Characteristic curve) --- кривая операционной характеристики получателя,
+            кривая на которой по оси Y расположен \textbf{true positive rate} или
+            \textbf{чувствительность модели}, а по оси X \textbf{false positive rate} или \textbf{специфичность модели}
+        \end{quote}
+
+        Предполагается, что у нас есть гиперпараметр, меняя который можно регулировать кол-во TP и FP.
+        Данный параметр часто называется \textbf{точкой отсечения} (\textbf{cut-off value}) --- некая величина
+        $p_{limit}$ такая, что если $p_{predicted} > p_{limit}$ то клиент считается дефолтным. Получается регулируя
+        данный параметр мы можем менять оценку кол-ва дефолтных клиентов.
+
+        \subsection{TPR и FPR}
+            \begin{table}[h] % [h] для размещения таблицы "здесь"
+                \centering % Центрирование таблицы
+                \caption{Исходы предсказания} % Заголовок таблицы
+                \begin{tabular}{|c|c|c|}
+                    \hline
+                    & \textbf{Предсказано: Да} & \textbf{Предсказано: Нет} \\ \hline
+                    \textbf{Фактически: Да} & True Positive (TP) & False Negative (FN) \\ \hline
+                    \textbf{Фактически: Нет} & False Positive (FP) & True Negative (TN) \\ \hline
+                \end{tabular}
+            \end{table}
+    
+            \begin{equation}
+                TPR = \dfrac{TP}{TP + FN}
+            \end{equation}
+            Intuition: Получается мы берем, все случаи когда произошел дефолт и смотрим, какую
+            долю произошедших дефолтов мы предсказали
+    
+            \begin{equation}
+                FPR = \dfrac{FP}{FP + TN}
+            \end{equation}
+            Intuition: В этот раз мы смотрим на все случаи, когда дефолт не произошел и смотрим, какую долю
+            не произошедших дефолтов мы предсказали
+    
+        \subsection{Precision и Recall}
+            Precision и Recall - очень похожие метрики
+
+            \begin{equation}
+                Precision = \dfrac{TP}{TP + FP}
+            \end{equation}
+            В этот раз, мы рассматриваем все случаи, когда мы предсказали ``Да`` и оцениваем какая доля из этих предсказаний, оказалась правильной
+
+            \begin{equation}
+                Recall = TPR
+            \end{equation}
+    
+        \subsection{Accuracy}
+            Accuracy используется для оценки общего качества модели,
+            мы рассматриваем долю всех правильных ответов модели.
+
+
+            \begin{equation}
+                Accuracy = \dfrac{TP + TN}{TP + TN + FP + FN}
+            \end{equation}
+
+    \section{ROC AUC}
+        ROC AUC расшифровывается как ROC area under curve
+
+
+
 
 
 
