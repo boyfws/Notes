@@ -12,6 +12,9 @@
 \usepackage{array}
 
 
+\allowdisplaybreaks
+
+
 \title{САНИ}
 \author{Минкин Даниэль}
 
@@ -460,6 +463,102 @@
     \]
     
     \textbf{Ч.Т.Д}
+
+
+    Рассмотрим еще одно выражение:
+
+    \begin{equation}
+        \chi^{2}_{\text{набл}} = \frac{n_{**} \cdot (n_{11}
+        \cdot n_{22} - n_{21} \cdot n_{12})^{2}}{n_{1*} \cdot n_{*1} \cdot n_{2*} \cdot n_{*2}}
+    \end{equation}
+
+    Покажем, что данное выражение равносильно предыдущему.
+    Рассмотрим предыдущее выражение, поделенное на $n_{**}$
+    \[
+    \begin{gathered}
+        \sum_{i=1}^{2}{\sum_{j=1}^{2}{  \frac{n_{ij}^{2} }{ n_{i*} \cdot n_{*j} }  }} - 1 \\
+        = \frac{n_{11}^{2} }{n_{1*} \cdot n_{*1}} + \frac{n_{12}^{2} }{n_{1*} \cdot n_{*2}} \\
+        + \frac{n_{21}^{2} }{n_{2*} \cdot n_{*1}} + \frac{n_{22}^{2} }{n_{2*} \cdot n_{*2}} - 1 \\
+        = \frac{ n_{11}^{2} \cdot n_{2*} \cdot n_{*2} }{n_{1*} \cdot n_{*1} \cdot n_{2*} \cdot n_{*2}} +
+        \frac{n_{12}^{2} \cdot n_{2*} \cdot n_{*1} }{n_{1*} \cdot n_{*1} \cdot n_{2*} \cdot n_{*2}} \\
+        + \frac{n_{21}^{2} \cdot n_{1*} \cdot n_{*2} }{n_{1*} \cdot n_{*1} \cdot n_{2*} \cdot n_{*2}} +
+        \frac{n_{22}^{2} \cdot n_{1*} \cdot n_{*1} }{n_{1*} \cdot n_{*1} \cdot n_{2*} \cdot n_{*2}} - 1 \\
+        = \frac{n_{11}^{2} \cdot n_{2*} \cdot n_{*2} + n_{12}^{2} \cdot n_{2*} \cdot n_{*1} + n_{21}^{2} \cdot n_{1*} \cdot n_{*2} + n_{22}^{2} \cdot n_{1*} \cdot n_{*1}}
+        {n_{1*} \cdot n_{*1} \cdot n_{2*} \cdot n_{*2}} \\ - 1
+    \end{gathered}
+    \]
+
+    Рассмотрим числитель отдельно, занеся туда 1
+
+
+    \begin{multline*}
+       \\ n_{11}^{2} \cdot n_{2*} \cdot n_{*2} + n_{12}^{2} \cdot n_{2*} \cdot n_{*1}
+       + n_{21}^{2} \cdot n_{1*} \cdot n_{*2} + n_{22}^{2} \cdot n_{1*} \cdot n_{*1} \\
+       - n_{1*} \cdot n_{*1} \cdot n_{2*} \cdot n_{*2} \\
+       = n_{11}^{2} \cdot (n_{21} + n_{22}) \cdot (n_{12} + n_{22}) \\
+       + n_{12}^{2} \cdot (n_{21} + n_{22}) \cdot (n_{11} + n_{21}) \\
+       + n_{21}^{2} \cdot (n_{11} + n_{12}) \cdot (n_{12} + n_{22}) \\
+       + n_{22}^{2} \cdot (n_{11} + n_{12}) \cdot (n_{11} + n_{21}) \\
+       - n_{1*} \cdot n_{*1} \cdot n_{2*} \cdot n_{*2} \\
+       = n_{11}^{2} \cdot (n_{21} \cdot n_{12} + n_{21} \cdot n_{22} + n_{22} \cdot n_{12} + n_{22}^{2}) \\
+       + n_{12}^{2} \cdot (n_{21} \cdot n_{11} + n_{21}^{2} + n_{22} \cdot n_{11} + n_{22} \cdot n_{21}) \\
+       + n_{21}^{2} \cdot (n_{11} \cdot n_{12} + n_{11} \cdot n_{22} + n_{12}^{2} + n_{12} \cdot n_{22}) \\
+       + n_{22}^{2} \cdot (n_{11}^{2} + n_{11} \cdot n_{21} + n_{12} \cdot n_{11} + n_{12} \cdot n_{21}) \\
+       - (n_{11} + n_{12}) \cdot (n_{11} + n_{21}) \cdot (n_{21} + n_{22}) \cdot (n_{12} + n_{22}) \\
+       = n_{11}^{2} \cdot (n_{21} \cdot n_{12} + n_{21} \cdot n_{22} + n_{22} \cdot n_{12} + n_{22}^{2}) \\
+       + n_{12}^{2} \cdot (n_{21} \cdot n_{11} + n_{21}^{2} + n_{22} \cdot n_{11} + n_{22} \cdot n_{21}) \\
+       + n_{21}^{2} \cdot (n_{11} \cdot n_{12} + n_{11} \cdot n_{22} + n_{12}^{2} + n_{12} \cdot n_{22}) \\
+       + n_{22}^{2} \cdot (n_{11}^{2} + n_{11} \cdot n_{21} + n_{12} \cdot n_{11} + n_{12} \cdot n_{21}) \\
+       - (n_{11}^{2} + n_{11} \cdot n_{21} + n_{12} \cdot n_{11} + n_{12} \cdot n_{21}) \\
+       \cdot (n_{21} \cdot n_{12} + n_{21} \cdot n_{22} + n_{22} \cdot n_{12} + n_{22}^{2}) \\
+       = n_{12}^{2} \cdot (n_{21} \cdot n_{11} + n_{21}^{2} + n_{22} \cdot n_{11} + n_{22} \cdot n_{21}) \\
+       + n_{21}^{2} \cdot (n_{11} \cdot n_{12} + n_{11} \cdot n_{22} + n_{12}^{2} + n_{12} \cdot n_{22}) \\
+       + n_{22}^{2} \cdot (n_{11}^{2} + n_{11} \cdot n_{21} + n_{12} \cdot n_{11} + n_{12} \cdot n_{21}) \\
+       - (n_{11} \cdot n_{21} + n_{12} \cdot n_{11} + n_{12} \cdot n_{21}) \\
+       \cdot (n_{21} \cdot n_{12} + n_{21} \cdot n_{22} + n_{22} \cdot n_{12} + n_{22}^{2}) \\
+       = n_{12}^{2} \cdot (n_{21} \cdot n_{11} + n_{21}^{2} + n_{22} \cdot n_{11} + n_{22} \cdot n_{21}) \\
+       + n_{21}^{2} \cdot (n_{11} \cdot n_{12} + n_{11} \cdot n_{22} + n_{12}^{2} + n_{12} \cdot n_{22}) \\
+       + n_{22}^{2} \cdot n_{11}^{2} \\
+       - (n_{11} \cdot n_{21} + n_{12} \cdot n_{11} + n_{12} \cdot n_{21}) \\
+       \cdot (n_{21} \cdot n_{12} + n_{21} \cdot n_{22} + n_{22} \cdot n_{12}) \\
+       = n_{12}^{2} \cdot (n_{21} \cdot n_{11} + n_{21}^{2} + n_{22} \cdot n_{11} + n_{22} \cdot n_{21}) \\
+       + n_{21}^{2} \cdot (n_{11} \cdot n_{12} + n_{11} \cdot n_{22} + n_{12}^{2} + n_{12} \cdot n_{22}) \\
+       + n_{22}^{2} \cdot n_{11}^{2} \\
+       - n_{11} \cdot n_{21}^2 \cdot n_{12} - n_{11} \cdot n_{21}^{2} \cdot n_{22} - n_{11} \cdot n_{21} \cdot n_{22} \cdot n_{12} \\
+       - n_{12}^{2} \cdot n_{11} \cdot n_{21} - n_{12} \cdot n_{11} \cdot n_{21} \cdot n_{22} - n_{12}^{2} \cdot n_{11} \cdot n_{22} \\
+       -  n_{12}^{2} \cdot n_{21}^{2} - n_{12} \cdot n_{21}^{2} \cdot n_{22} - n_{22} \cdot n_{12}^{2} \cdot n_{21} \\
+       = n_{12}^{2} \cdot (n_{22} \cdot n_{11} + n_{22} \cdot n_{21}) \\
+       + n_{21}^{2} \cdot (n_{11} \cdot n_{12} + n_{11} \cdot n_{22} + n_{12}^{2} + n_{12} \cdot n_{22}) \\
+       + n_{22}^{2} \cdot n_{11}^{2} \\
+       - n_{11} \cdot n_{21}^2 \cdot n_{12} - n_{11} \cdot n_{21}^{2} \cdot n_{22} - n_{11} \cdot n_{21} \cdot n_{22} \cdot n_{12} \\
+       - n_{12} \cdot n_{11} \cdot n_{21} \cdot n_{22} - n_{12}^{2} \cdot n_{11} \cdot n_{22} \\
+       - n_{12} \cdot n_{21}^{2} \cdot n_{22} - n_{22} \cdot n_{12}^{2} \cdot n_{21} \\
+       = n_{12}^{2} \cdot n_{22} \cdot n_{11} \\
+       + n_{21}^{2} \cdot (n_{11} \cdot n_{22} + n_{12}^{2} + n_{12} \cdot n_{22}) \\
+       + n_{22}^{2} \cdot n_{11}^{2} \\
+       - n_{11} \cdot n_{21}^{2} \cdot n_{22} - n_{11} \cdot n_{21} \cdot n_{22} \cdot n_{12} \\
+       - n_{12} \cdot n_{11} \cdot n_{21} \cdot n_{22} - n_{12}^{2} \cdot n_{11} \cdot n_{22} \\
+       - n_{12} \cdot n_{21}^{2} \cdot n_{22}  \\
+       = n_{12}^{2} \cdot n_{22} \cdot n_{11} \\
+       + n_{21}^{2} \cdot n_{12}^{2} + n_{22}^{2} \cdot n_{11}^{2} \\
+       - n_{11} \cdot n_{21} \cdot n_{22} \cdot n_{12} \\
+       - n_{12} \cdot n_{11} \cdot n_{21} \cdot n_{22} - n_{12}^{2} \cdot n_{11} \cdot n_{22} \\
+       = n_{21}^{2} \cdot n_{12}^{2} + n_{22}^{2} \cdot n_{11}^{2} \\
+       - n_{11} \cdot n_{21} \cdot n_{22} \cdot n_{12} \\
+       - n_{12} \cdot n_{11} \cdot n_{21} \cdot n_{22} \\
+       = (n_{21} \cdot n_{12} - n_{22} \cdot n_{11})^{2} \\
+    \end{multline*}
+    
+    
+    Добавим знаменатель и $n_{**}$, тогда наша изначальная формула равносильна 
+    
+    \begin{equation}
+        \frac{n_{**} \cdot (n_{11}
+        \cdot n_{22} - n_{21} \cdot n_{12})^{2}}{n_{1*} \cdot n_{*1} \cdot n_{2*} \cdot n_{*2}}
+    \end{equation}
+    
+    \textbf{Ч.Т.Д}
+    
 
     \paragraph{Критерий отношения правдоподобия}
 
