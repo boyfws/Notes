@@ -207,7 +207,7 @@
 
     \subsection{Проверка независимости двух дихотомических признаков}
 
-    Во-первых обозначим, что это за признаки
+    Обозначим, что это за признаки
 
     \begin{quote}
         \textbf{Дихотомические переменные} --- a.k.a бинарные, переменные, которые принимают всего два значения
@@ -387,7 +387,7 @@
 
     \quad
 
-    Во-первых, начнем с того, что у нас 4 слагаемых и 4 параметра: $p_{11}, p_{12}, p_{21}, p_{22}$.
+    Начнем с того, что у нас 4 слагаемых и 4 параметра: $p_{11}, p_{12}, p_{21}, p_{22}$.
     Мы можем сразу заметить, что зная 3 параметра, мы точно находим 4, следовательно кол-во ``неизвестных`` параметров $<= 3$.
     Нужно заметить, что мы проверяем гипотезу принадлежности распределения вектора $(X, Y)$ к распределению, где $X$ и $Y$ независимы,
     а у такого распределения достаточно знать всего две $p_{ij}$ для того, чтобы вывести все остальные $p$ - шки.
@@ -563,6 +563,93 @@
     \paragraph{Критерий отношения правдоподобия}
 
     \quad
+
+    Рассмотрим данный критерий в общем виде, он задается по такому принципу:
+    Путь у нас есть модель c пространством параметров $\Theta$.
+    $H_{0}$ задается так: пусть параметр $\theta \in \Theta_{0}$ где $\Theta_{0} \subset \Theta$.
+    При этом $H_{1}$ гласит: $\theta \in \Theta \textbackslash \Theta_{0}$
+
+    \quad
+
+    Тестовая статистика задается как:
+
+    \quad
+
+    \begin{equation}
+        \lambda = - 2 \cdot \ln(  \frac{\sup_{\theta \in \Theta_{0}} L(\theta | x) }{\sup_{\theta \in \Theta} L(\theta | x) } )
+    \end{equation}
+
+    легко заметить, что
+
+    \[
+    \begin{gathered}
+        \sup_{\theta \in \Theta_{0}} L(\theta | x) <= \sup_{\theta \in \Theta} L(\theta | x) \\
+        \Rightarrow \\
+        \frac{\sup_{\theta \in \Theta_{0}} L(\theta | x) }{\sup_{\theta \in \Theta} L(\theta | x) } <= 1 \\
+        \Rightarrow \\
+        \ln(  \frac{\sup_{\theta \in \Theta_{0}} L(\theta | x) }{\sup_{\theta \in \Theta} L(\theta | x) } ) <= 0 \\
+        \Rightarrow \\
+        \lambda >= 0
+    \end{gathered}
+    \]
+
+    Попробуем определить распределение данной статистики.
+    Для начала представим нашу функцию по другому
+    \begin{equation}
+        \lambda = -2 \cdot (\ln(\sup_{\theta \in \Theta_{0}} L(\theta | x)) - \ln(\sup_{\theta \in \Theta} L(\theta | x)) )
+    \end{equation}
+
+    Пусть $\ell(\theta) = \ln(L(\theta | x))$
+
+    Аппроксимируем функцию разложением в ряд Тейлора вокруг точки максимизирующей функцию на всем пространстве параметров для знаменателя (обозначим точку как $\theta^{*}$), тогда:
+
+    \begin{equation}
+        \ell(\theta) \approx \ell(\theta^{*}) + \frac{\partial \ell(\theta^{*})}{\partial \theta} \cdot (\theta - \theta^{*}) +
+        0.5 \cdot (\theta - \theta^{*})^{T} \cdot \frac{\partial^{2} \ell(\theta^{*})}{\partial \theta^{2}} \cdot (\theta - \theta^{*})
+    \end{equation}
+
+    \quad
+
+    Так как, это точка максимума то первый дифференциал равен нулевому вектору, следовательно
+
+    \quad
+
+    \begin{equation}
+        \ell(\theta) \approx \ell(\theta^{*}) +
+        0.5 \cdot (\theta - \theta^{*})^{T} \cdot \frac{\partial^{2} \ell(\theta^{*})}{\partial \theta^{2}} \cdot (\theta - \theta^{*})
+    \end{equation}
+
+    \quad
+
+    \textbf{Тут же всплывает первое предположение, что точка глобального максимума на пространстве парметров не является краевой}
+
+    \quad
+
+    Пусть $\theta^{**}$ - точка в которой максимизируется функция на $\Theta_{0}$
+
+    Подставим в это разложение $\theta^{**}$ и взглянем на нашу статистику
+
+    \begin{equation}
+        \lambda = -2 \cdot (\ell(\theta^{*}) +
+        0.5 \cdot (\theta^{**} - \theta^{*})^{T} \cdot \frac{\partial^{2} \ell(\theta^{*})}{\partial \theta^{2}} \cdot (\theta^{**} - \theta^{*}) - \ell(\theta^{*}))
+    \end{equation}
+
+    \quad
+
+    В итоге:
+
+    \quad
+
+    \begin{equation}
+         \lambda = -(\theta^{**} - \theta^{*})^{T} \cdot \frac{\partial^{2} \ell(\theta^{*})}{\partial \theta^{2}} \cdot (\theta^{**} - \theta^{*})
+    \end{equation}
+
+    Рассмотрим поведение данного параметра при $n \rightarrow \inf$ и верной $H_{0}$.
+    Заметим, что тогда $\theta^{**} \rightarrow \theta^{*} \rightarrow \theta_{true}$ т.е оба параметра стремятся к одному истинному параметру.
+    При этом матрица $\frac{\partial^{2} \ell(\theta^{*})}{\partial \theta^{2}}$  стремится к матрице Фишера (Информация Фишера для многомерных данных --- матрица, а не вектор).
+    Каждая из оценок $\theta^{**}$ и $\theta^{*}$ является асимптотически нормальной, по свойству оценки МНП.
+    Следовательно разница данных величин имеет нормальное распределение
+
 
 
     Рассмотрим статистику критерия:
