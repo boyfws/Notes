@@ -34,70 +34,76 @@
 
     \quad 
 
-    \textbf{Градиент для линейной регрессии}
+    \textbf{Градиент}
 
     \quad 
 
     Раскроем наше выражение
 
     \begin{equation}
-        \Vert Aw - b \Vert^{2} = \langle Aw - b, Aw - b \rangle = \langle Aw, Aw  \rangle - 2 \langle Aw, b  \rangle + \langle b, b  \rangle
+        \Vert f(X) - y \Vert^{2} = \langle f(X) - y, f(X) - y \rangle = \langle f(X), f(X)  \rangle - 2 \langle f(X), y  \rangle + \langle y, y  \rangle
     \end{equation}
 
     Возьмем дифференциал от данного выражения 
 
     \begin{equation}
-        [D_{w_{0}} (\Vert Aw - b \Vert)] = [D_{w_{0}} (\langle Aw, Aw  \rangle)] - 2 [D_{w_{0}} (\langle Aw, b  \rangle)] + [D_{w_{0}} (\langle b, b  \rangle)]
+        [D_{f(X)} (\Vert f(X) - y \Vert)] = [D_{f(X)} (\langle f(X), f(X)  \rangle)] - 2 [D_{f(X)} (\langle f(X), y  \rangle)] + [D_{f(X)} (\langle y, y  \rangle)]
     \end{equation}
 
     Мы можем исключить последее слагаемое
 
     \begin{equation}
-        [D_{w_{0}} (\langle Aw, Aw  \rangle)] - 2 [D_{w_{0}} (\langle Aw, b  \rangle)] 
+        [D_{f(X)} (\langle f(X), f(X)  \rangle)] - 2 [D_{f(X)} (\langle f(X), y  \rangle)] 
+    \end{equation}
+
+    Для удобства заменим $f(X)$ на $f$. Мы получим выражение равное: 
+
+    \begin{equation}
+        [D_{f} (\langle f, f  \rangle)] - 2 [D_{f} (\langle f, y  \rangle)] 
     \end{equation}
 
     Рассмотрим дифференциал второго слагаемого 
 
     \begin{equation}
-        b^{T} A (w + \Delta w) - b^{T} A w = b^{T} A \Delta w = \Delta w^{T}  A^{T} b
+        y^{T} (f + \Delta f) - y^{T} f = y^{T} \Delta f = \Delta f^{T} y
     \end{equation}
 
     Следовательно: 
 
     \begin{equation}
-        [D_{w_{0}} (\langle Aw, b  \rangle)](\Delta w) = \Delta w^{T} A^{T} b
+        [D_{f} (\langle f, y  \rangle)] = y
     \end{equation}
 
     Рассмотрим дифференциал первого выражения, заметим, что по свойству симметричности произвдения и правилу дифференцирования умножения мы получим
 
     \begin{equation}
-        [D_{w_{0}} (\langle Aw, Aw  \rangle)] = 2 \langle[D_{w_{0}} (Aw)], Aw_{0}  \rangle
+        [D_{f} (\langle f, f  \rangle)] = 2 \langle[D_{f} (f)], f  \rangle
     \end{equation}
 
     Легко показать, что 
 
     \begin{equation}
-        [D_{w_{0}} (Aw)] = A 
+        [D_{f} (f)] = E  
     \end{equation}
 
     Следовательно наше выражение приводимо к
 
     \begin{equation}
-        [D_{w_{0}} (\langle Aw, Aw  \rangle)] = 2 \langle A, Aw_{0}  \rangle = 2 A^{T}Aw_{0}
+        [D_{f} (\langle f, f  \rangle)] = 2 \langle E, f  \rangle = 2 f
     \end{equation}
 
     Приведем все это к одной формуле 
 
     \begin{equation}
-        2 A^{T}A w_{0} - 2  A^{T} b = 2 A^{T} (A w_{0} - b)
+        2 f(X) - 2 y = 2 (f(X) - y)
     \end{equation}
 
-    А теперь поделим все на $N$, где $N$ --- размер выборки, так как это монотонное преобразование не зависящее от $w$, оно не влияет на дифференциал
+    А теперь поделим все на $N$, где $N$ --- размер выборки, так как это монотонное преобразование не зависящее от $f(X)$, оно не влияет на дифференциал
     
     Таким образом: 
 
     \begin{equation}
-        [D_{w_{0}} (MSE)] = \frac{2}{N} A^{T} (A w_{0} - b)
+        [D_{f(X)} (MSE)] = \frac{2}{N} (f(X) - y)
     \end{equation}
 
     \subsubsection{MAE}
@@ -108,34 +114,34 @@
 
     \quad
 
-    \textbf{Градиент для линейной регрессии}
+    \textbf{Градиент}
 
     \quad 
 
-    Уберем деление на $N$, так как это не влияет на дифференциал
+    Уберем деление на $N$, так как это не влияет на дифференциал, мы добавим его в конце
 
 
     \begin{equation}
-        [D_{w_{0}}(MAE)] = \frac{1}{N} [D_{w_{0}}(\langle \operatorname{sign}(Xw - y), Xw - y \rangle)]
+        [D_{f(X)}(MAE)] = \frac{1}{N} [D_{f(X)}(\langle \operatorname{sign}(f(X) - y), f(X) - y \rangle)]
     \end{equation}
 
-    Тогда 
+    Как и в прошлом случае заменим $f(X)$ на $f$ и начнем раскрывать выражение. Тогда 
 
     \[
     \begin{gathered}
-        [D_{w_{0}}(\langle \operatorname{sign}(Xw - y), Xw - y \rangle)] \\ 
-        = \langle [D_{w_{0}}(\operatorname{sign}(Xw - y))], Xw - y \rangle + \langle \operatorname{sign}(Xw - y), [D_{w_{0}}(Xw - y)] \rangle \\
-        = \langle 0, Xw - y \rangle + \langle \operatorname{sign}(Xw - y), X \rangle \\ 
-        = \operatorname{sign}(Xw - y)^{*} X
+        [D_{f}(\langle \operatorname{sign}(f - y), f - y \rangle)] \\ 
+        = \langle [D_{f}(\operatorname{sign}(f - y))], f - y \rangle + \langle \operatorname{sign}(f - y), [D_{f}(f - y)] \rangle \\
+        = \langle 0, f - y \rangle + \langle \operatorname{sign}(f - y), E \rangle \\ 
+        = \operatorname{sign}(f - y)
     \end{gathered}
     \]
 
-    Если $\Delta w$ --- вектор строка
+    Если $\Delta f$ --- вектор строка
 
     Следовательно: 
 
     \begin{equation}
-        [D_{w_{0}}(MAE)](\Delta w) = \frac{1}{N} \operatorname{sign}(Xw - y)^{*} X \Delta w
+        [D_{w_{0}}(MAE)](\Delta f) = \frac{1}{N} \Delta f \cdot \operatorname{sign}(f - y) 
     \end{equation}
 
     \subsubsection{MAPE}
@@ -146,28 +152,24 @@
 
     \quad 
 
-    \textbf{Градиент для линейной регрессии}
+    \textbf{Градиент}
 
     \quad  
 
     По аналогии с MAE 
 
     \begin{equation}
-        [D_{w_{0}}(MAPE)](\Delta w) =  \frac{1}{N} \operatorname{sign}(f(X) - y)^{*} \cdot \operatorname{diag}(\frac{1}{| y_{1} |}, \frac{1}{| y_{2} |}, \frac{1}{| y_{3} |} ...) X \Delta w
+        [D_{f(X)}(MAPE)] =  \frac{1}{N} \cdot \operatorname{diag}(\frac{1}{| y_{1} |}, \frac{1}{| y_{2} |}, \frac{1}{| y_{3} |} ...) \cdot  \operatorname{sign}(f(X) - y)
     \end{equation}
-
-
-    \section{Регуляризация}
-
-    Регуляризация --- наложение штрафа на модель за обучаемые параметры. Регуляризация добавляется в качестве меры для борьбы с переобучением. Для каждой модели регуляризация описывается 
-    отдельно
 
 
     \section{Линейные модели}
 
     Линейные модели --- класс моделей которые используют линейное преобразование для вектора входных фичей.
 
-    \subsection{Регрессия}
+    \subsection{Общее}
+
+    \subsubsection{Регрессия}
 
     Формализуем задачу регрессии, пусть у нас есть вектор $\bar{x} \in \operatorname{R}^{n}$.
     Тогда предсказание может быть сделано с помощью такой формулы:
@@ -178,7 +180,7 @@
 
     Т.е мы ищем такой вектор $\bar{w} \in \operatorname{R}^{n + 1}$, который будет выдавать наиболее близкие $y_{pred}$ к $y_{true}$.
 
-    \subsection{Классификация}
+    \subsubsection{Классификация}
 
     В случае решения задачи классификации через линейные модели сначала делается предсказание как в случае регрессии, а после
     к результату предсказания применяется разделяющее правило (например в случае бинарной классификации правило может задаваться так:
@@ -188,7 +190,7 @@
     которая разделяет исходное пространство: i.e $\sum_{i = 1}^{n}{w_{i} \cdot x_{i}} + c > 0$ --- плоскость в n-мерном пространстве,
     которая делит пространство на положительный и отрицательные классы
 
-    \subsection{Общее}
+    \subsubsection{Прочее}
 
     Несколько фактов:
 
@@ -839,6 +841,17 @@
         = \langle [D_{w}(w)], \operatorname{sign}(w) \rangle = \langle 1, \operatorname{sign}(w) \rangle
     \end{gathered}
     \]
+
+    \subsubsection{Интуиция}
+
+    Как мы видим на примере задачи с минимизацией MSE с L2 регуляризацией, ее добавление делает 
+    матрицу $A^{T} A$ более ``невырожденной``, что повышает численную стабильность обращения матрицы и как 
+    следствие всего решения в целом. Предполагая, что целевая переменная
+    декомпозируется на истинные значения и случайный 
+    шум, мы можем сказать, что наша модель получила лучшую обобщающую способность. Теперь изменениие
+    случайного шума в таргете приведет к меньшему изменению вектора весов, так как снизилось число обусловленности.
+    Следовательно вектор весов более стабилен и менее чувствителен к шуму в данных. 
+
 
     \section{Эмбеддеры в Word2Vec}
     Цель эмбедера - отобразить некий нечисловой объект в многомерное числовое пространство, так чтобы похожие 
