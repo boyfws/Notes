@@ -315,6 +315,72 @@
     модели) и получить ROC-AUC больше 0.5. Теоретически ROC кривая будет представлять собой $y=x$ в таком случае, если 
     предположить, что $g(x) \sim \operatorname{Uniform}(0, 1)$
 
+    \quad
+
+    \textbf{Интересный факт}. 
+    Заметим, что ROC-AUC полностью эквивалентен статистике Манна — Уитни — Уилкоксона 
+
+    \textbf{Оптимизация ROC-AUC}. Можно легко заметить, что ROC AUC не является дифференцируемой функцией. Поэтому нам нужно 
+    использовать функцию потерь, которая аппроксимирует ROC-AUC или мажорирует ее. Также исследованиями было показано, что 
+    оптмизация MSE или BCE не всегда приводит к увеличению ROC-AUC
+
+    \quad 
+
+    \textbf{Варианты функций потерь}
+
+    \quad 
+
+    Выберем два множества $P$ и $N$ - позитивных и негативных самплов соотв. 
+    \begin{equation}
+        \frac{1}{|P| |N|}  \cdot \sum_{x_{pos} \in P} [ \ \sum_{x_{neg} \in N} \log\sigma[f(x_{pos}) - f(x_{neg})] \ ] \rightarrow \max
+    \end{equation}
+
+    Эта функция потерь также называется Pairwise Log-Loss 
+
+    \quad 
+
+    Второй вариант аппроксимации похож на первый и стараается оптмизировать вероятность того, что положительный класс получит
+    большую оценку чем отрицательный класс 
+
+    \begin{equation}
+        \frac{1}{|P| |N|}  \cdot \sum_{x_{pos} \in P} [ \ \sum_{x_{neg} \in N} \sigma[\frac{f(x_{pos}) - f(x_{neg})}{\epsilon}] \ ] \rightarrow \max
+    \end{equation}
+
+    Тут $\epsilon > 0$ это гиперпараметр который позволяет лучше аппроксимировать функцию индикатор - чем он меньше
+    тем ближе мы к функции индикатору
+
+    \quad 
+
+    Сравним градиенты данных функций потерь, пусть параметры модели заданы как $\theta$.
+    Далее считаем $z = f_\theta(x_{pos}) - f_\theta(x_{neg})$.
+    Для первой функции:
+
+    $$
+    \begin{aligned}
+    \nabla_\theta \mathcal{L}(\theta) &= -\nabla_\theta \log \sigma(z) \\
+    &= -\frac{1}{\sigma(z)} \cdot \nabla_\theta \sigma(z) \\
+    &= -\frac{1}{\sigma(z)} \cdot \sigma(z)(1 - \sigma(z)) \cdot \nabla_\theta z \\
+    &= -(1 - \sigma(z)) \cdot \nabla_\theta (f_\theta(x_{pos}) - f_\theta(x_{neg})) \\
+    &= -(1 - \sigma(f_\theta(x_{pos}) - f_\theta(x_{neg}))) \cdot (\nabla_\theta f_\theta(x_{pos}) - \nabla_\theta f_\theta(x_{neg}))
+    \end{aligned}
+    $$
+
+
+    Для второй функции:
+    $$
+    \begin{aligned}
+    \nabla_\theta \mathcal{L}(\theta) &= -\nabla_\theta \sigma(\frac{z}{\epsilon}) \\
+    &= - \frac{1}{\epsilon} \cdot \sigma(\frac{z}{\epsilon})(1 - \sigma(\frac{z}{\epsilon})) \cdot \nabla_\theta z \\
+    &= - \frac{1}{\epsilon} \cdot \sigma(\frac{z}{\epsilon})(1 - \sigma(\frac{z}{\epsilon})) \cdot \nabla_\theta (f_\theta(x_{pos}) - f_\theta(x_{neg})) \\
+    &= - \frac{1}{\epsilon} \cdot \sigma(\frac{z}{\epsilon})(1 - \sigma(\frac{z}{\epsilon})) \cdot (\nabla_\theta f_\theta(x_{pos}) - \nabla_\theta f_\theta(x_{neg}))
+    \end{aligned}
+    $$
+
+    $\epsilon$ обычно выбирается маленьким, например $0.1$ или $0.01$, за счет этого $\frac{z}{\epsilon}$ становится более резким. 
+    Это может приводить к тому, что даже когда модель очень сильно ошибается итоговый градиент может обнуляться и модель не получит информацию 
+    для обновления - поэтому значительно надежнее использовать Pairwise Log-Loss
+
+
     \subsubsection{CAP curve и CAP-AUC}
 
     CAP расшифровывается как Cumulative Accuracy Profile. Для начала сформулируем теоретически, что такое кривая CAP. 
